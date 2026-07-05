@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BLUEBERRIES — Boronica të Pejës | Kosovo's Finest Blueberries</title>
+<meta name="description" content="Grown in the highlands of Pejë, Kosovo. Watched, inspected and hand-picked — the finest blueberries in the country.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='55' r='40' fill='%235B5BD6'/%3E%3Ccircle cx='38' cy='42' r='10' fill='%23A5B4FC' opacity='.5'/%3E%3C/svg%3E">
+<style>
+:root{
+  --ink:#0B0B22;            /* midnight blueberry */
+  --ink-2:#14142F;
+  --berry:#5B5BD6;          /* blueberry violet-blue */
+  --berry-deep:#3B3BA8;
+  --bloom:#A5B4FC;          /* the silvery bloom on a berry */
+  --bloom-2:#C7CDF9;
+  --cream:#F6F2E9;          /* paper cream */
+  --cream-2:#EFE9DC;
+  --leaf:#6FA96F;
+  --gold:#E3B23C;
+  --radius:28px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:auto}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+body{
+  font-family:'Instrument Sans',sans-serif;
+  background:var(--ink);
+  color:var(--cream);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--berry);color:var(--cream)}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+h1,h2,h3,.display{font-family:'Fraunces',serif;font-weight:600;letter-spacing:-.02em}
+
+/* ---------- custom cursor ---------- */
+.cursor{position:fixed;top:0;left:0;width:14px;height:14px;border-radius:50%;
+  background:var(--bloom);pointer-events:none;z-index:9999;mix-blend-mode:difference;
+  transform:translate(-50%,-50%);transition:width .25s,height .25s,opacity .3s;opacity:0}
+body:hover .cursor{opacity:1}
+.cursor.is-hover{width:56px;height:56px}
+@media (hover:none){.cursor{display:none}}
+
+/* ---------- progress bar ---------- */
+.progress{position:fixed;top:0;left:0;right:0;height:4px;z-index:300;pointer-events:none}
+.progress span{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--berry),var(--bloom));
+  transform:scaleX(0);transform-origin:left}
+
+/* ---------- preloader ---------- */
+.loader{position:fixed;inset:0;background:var(--ink);z-index:1000;display:flex;
+  flex-direction:column;align-items:center;justify-content:center;gap:28px}
+.loader svg{width:84px;height:84px}
+.loader-word{font-family:'Fraunces',serif;font-size:clamp(1.4rem,3vw,2rem);letter-spacing:.42em;
+  text-indent:.42em;color:var(--bloom);overflow:hidden;display:flex}
+.loader-word span{display:inline-block;transform:translateY(110%)}
+
+/* ---------- nav ---------- */
+.nav{position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:200;
+  display:flex;align-items:center;gap:8px;padding:10px 12px 10px 20px;border-radius:999px;
+  background:rgba(11,11,34,.55);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border:1px solid rgba(165,180,252,.18);width:min(92vw,720px);justify-content:space-between;
+  opacity:0;translate:0 -24px}
+.nav-brand{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-weight:700;font-size:1.05rem;letter-spacing:.02em}
+.nav-brand svg{width:26px;height:26px}
+.nav-links{display:flex;gap:4px}
+.nav-links a{font-size:.82rem;font-weight:600;letter-spacing:.04em;padding:9px 14px;border-radius:999px;
+  color:var(--bloom-2);transition:background .25s,color .25s;cursor:pointer}
+.nav-links a:hover{background:rgba(91,91,214,.28);color:#fff}
+.nav-cta{background:var(--berry);color:#fff;font-size:.82rem;font-weight:700;letter-spacing:.04em;
+  border:none;border-radius:999px;padding:11px 20px;transition:background .25s,transform .25s}
+.nav-cta:hover{background:var(--bloom);color:var(--ink)}
+@media (max-width:720px){.nav-links{display:none}}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;
+  justify-content:center;align-items:center;overflow:hidden;
+  background:radial-gradient(120% 90% at 50% 110%, #23235A 0%, var(--ink) 55%)}
+.hero-tag{display:flex;align-items:center;gap:12px;font-size:.8rem;font-weight:600;
+  letter-spacing:.34em;text-indent:.34em;color:var(--bloom);text-transform:uppercase;margin-bottom:2.2vw;
+  opacity:0}
+.hero-tag::before,.hero-tag::after{content:"";width:44px;height:1px;background:var(--berry)}
+.hero-title{font-size:clamp(3.2rem,12.5vw,12.5rem);line-height:.86;text-align:center;
+  font-weight:700;color:var(--cream);user-select:none}
+.hero-title .line{display:block;overflow:hidden;padding:.06em 0}
+.hero-title .char{display:inline-block;transform:translateY(115%)}
+.hero-title em{font-style:italic;font-weight:400;color:var(--bloom)}
+.hero-sub{margin-top:3vh;max-width:520px;text-align:center;color:#B9BEE8;font-size:clamp(.95rem,1.2vw,1.1rem);
+  line-height:1.65;opacity:0;padding:0 24px}
+.hero-actions{display:flex;gap:14px;margin-top:4vh;opacity:0;flex-wrap:wrap;justify-content:center;padding:0 24px}
+.btn{display:inline-flex;align-items:center;gap:10px;border-radius:999px;padding:16px 30px;
+  font-weight:700;font-size:.9rem;letter-spacing:.03em;border:none;transition:transform .25s,background .25s,color .25s}
+.btn svg{width:16px;height:16px;transition:transform .25s}
+.btn:hover svg{transform:translateX(4px)}
+.btn-primary{background:var(--berry);color:#fff}
+.btn-primary:hover{background:var(--bloom);color:var(--ink)}
+.btn-ghost{background:transparent;color:var(--bloom-2);border:1.5px solid rgba(165,180,252,.35)}
+.btn-ghost:hover{border-color:var(--bloom);color:#fff}
+.hero-scroll{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:10px;font-size:.68rem;font-weight:600;
+  letter-spacing:.3em;text-indent:.3em;color:var(--bloom);text-transform:uppercase;opacity:0}
+.hero-scroll .wheel{width:22px;height:36px;border:1.5px solid rgba(165,180,252,.45);border-radius:12px;position:relative}
+.hero-scroll .wheel::after{content:"";position:absolute;top:6px;left:50%;width:4px;height:8px;margin-left:-2px;
+  border-radius:4px;background:var(--bloom);animation:wheel 1.8s ease-in-out infinite}
+@keyframes wheel{0%,100%{transform:translateY(0);opacity:1}70%{transform:translateY(12px);opacity:0}71%{opacity:0}}
+.hero-berry{position:absolute;pointer-events:none;will-change:transform;filter:drop-shadow(0 18px 30px rgba(0,0,0,.45))}
+.hero-glow{position:absolute;width:60vw;height:60vw;border-radius:50%;left:50%;top:60%;
+  transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(91,91,214,.22),transparent 65%);pointer-events:none}
+.hero-hint{position:absolute;bottom:34px;right:32px;font-size:.7rem;letter-spacing:.18em;color:rgba(165,180,252,.55);
+  text-transform:uppercase;opacity:0}
+@media (max-width:720px){
+  .hero-hint{display:none}
+  .hero-tag{padding:0 24px;text-align:center}
+  .hero-tag::before,.hero-tag::after{display:none}
+}
+
+/* ---------- marquee ---------- */
+.marquee{overflow:hidden;background:var(--berry);color:var(--ink);padding:20px 0;transform:rotate(-1.4deg) scale(1.02);
+  border-top:2px solid var(--ink-2);border-bottom:2px solid var(--ink-2);position:relative;z-index:5}
+.marquee-track{display:flex;gap:0;width:max-content;animation:marquee 26s linear infinite}
+.marquee-item{display:flex;align-items:center;gap:26px;padding-right:26px;
+  font-family:'Fraunces',serif;font-weight:600;font-size:clamp(1.1rem,2.2vw,1.7rem);white-space:nowrap;color:var(--cream)}
+.marquee-item svg{width:22px;height:22px;flex:none}
+@keyframes marquee{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.marquee-track{animation:none}}
+
+/* ---------- section shared ---------- */
+.section-label{display:inline-flex;align-items:center;gap:10px;font-size:.74rem;font-weight:700;
+  letter-spacing:.3em;text-indent:.3em;text-transform:uppercase;color:var(--berry);margin-bottom:22px}
+.section-label i{width:10px;height:10px;border-radius:50%;background:var(--berry);display:inline-block}
+.chapter-num{font-family:'Fraunces',serif;font-style:italic;font-weight:400;opacity:.45;margin-right:.35em}
+
+/* ---------- THE LAND (pinned) ---------- */
+.land{background:var(--cream);color:var(--ink);position:relative;z-index:4}
+.land-inner{display:grid;grid-template-columns:1.05fr .95fr;gap:5vw;align-items:center;
+  max-width:1280px;margin:0 auto;padding:12vh 6vw;min-height:100svh}
+.land h2{font-size:clamp(2.4rem,5vw,4.6rem);line-height:1.02;color:var(--ink)}
+.land h2 em{font-style:italic;font-weight:400;color:var(--berry-deep)}
+.land p.lede{margin-top:26px;font-size:clamp(1rem,1.25vw,1.15rem);line-height:1.7;color:#3D3D5C;max-width:52ch}
+.land-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;margin-top:44px;
+  border-radius:var(--radius);overflow:hidden;background:#DCD5C4}
+.stat{background:var(--cream-2);padding:26px 26px 22px}
+.stat b{display:block;font-family:'Fraunces',serif;font-size:clamp(1.9rem,3.2vw,2.9rem);font-weight:700;color:var(--berry-deep);line-height:1;white-space:nowrap}
+.stat b sup{font-size:.45em;font-weight:600}
+.stat > span{display:block;margin-top:8px;font-size:.82rem;font-weight:600;letter-spacing:.05em;color:#5A5A78;text-transform:uppercase}
+.land-media{position:relative}
+.land-img{border-radius:var(--radius);overflow:hidden;aspect-ratio:4/5;box-shadow:0 40px 80px -30px rgba(11,11,34,.35)}
+.land-img img{width:100%;height:100%;object-fit:cover;transform:scale(1.25)}
+.land-img-clip{clip-path:inset(12% 12% 12% 12% round var(--radius))}
+.land-badge{position:absolute;right:-22px;bottom:38px;background:var(--ink);color:var(--cream);
+  border-radius:22px;padding:20px 24px;display:flex;align-items:center;gap:14px;box-shadow:0 24px 50px -18px rgba(11,11,34,.5);
+  transform:rotate(3deg)}
+.land-badge svg{width:34px;height:34px;flex:none}
+.land-badge small{display:block;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--bloom)}
+.land-badge strong{font-family:'Fraunces',serif;font-size:1.05rem}
+@media (max-width:900px){
+  .land-inner{grid-template-columns:1fr;padding:14vh 6vw}
+  .land-badge{right:8px}
+}
+
+/* ---------- HARVEST horizontal gallery ---------- */
+.harvest{background:var(--ink);position:relative;z-index:3}
+.harvest-pin{height:100svh;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+.harvest-head{padding:0 6vw;margin-bottom:4.5vh;display:flex;align-items:flex-end;justify-content:space-between;gap:24px}
+.harvest-head h2{font-size:clamp(2.2rem,4.6vw,4.2rem);line-height:1;color:var(--cream)}
+.harvest-head h2 em{font-style:italic;font-weight:400;color:var(--bloom)}
+.harvest-head p{max-width:34ch;color:#B9BEE8;font-size:.95rem;line-height:1.65}
+.harvest-track{display:flex;gap:2.4vw;padding:0 6vw;width:max-content;will-change:transform}
+.hcard{position:relative;flex:none;width:clamp(280px,30vw,460px);aspect-ratio:3/4;border-radius:var(--radius);
+  overflow:hidden;background:var(--ink-2)}
+.hcard img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.6,.2,1)}
+.hcard:hover img{transform:scale(1.06)}
+.hcard-cap{position:absolute;inset:auto 0 0 0;padding:70px 22px 20px;
+  background:linear-gradient(transparent,rgba(11,11,34,.88));display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
+.hcard-cap h3{font-size:1.3rem;color:var(--cream)}
+.hcard-cap span{font-size:.72rem;font-weight:700;letter-spacing:.16em;color:var(--bloom);text-transform:uppercase;white-space:nowrap}
+.hcard-num{position:absolute;top:16px;left:18px;font-family:'Fraunces',serif;font-style:italic;
+  font-size:1.1rem;color:var(--cream);background:rgba(11,11,34,.55);backdrop-filter:blur(8px);
+  border-radius:999px;padding:6px 14px}
+@media (max-width:900px){
+  .harvest-pin{height:auto;padding:14vh 0}
+  .harvest-head{flex-direction:column;align-items:flex-start}
+  .harvest-track{flex-direction:column;width:auto;padding:0 6vw}
+  .hcard{width:100%;aspect-ratio:4/5}
+}
+
+/* ---------- QUALITY sticky cards ---------- */
+.quality{background:var(--cream);color:var(--ink);position:relative;z-index:4;padding:14vh 6vw 16vh}
+.quality-head{max-width:1280px;margin:0 auto 8vh}
+.quality-head h2{font-size:clamp(2.4rem,5vw,4.6rem);line-height:1.02}
+.quality-head h2 em{font-style:italic;font-weight:400;color:var(--berry-deep)}
+.qcards{max-width:1080px;margin:0 auto;display:grid;gap:26px}
+.qcard{position:sticky;top:14vh;display:grid;grid-template-columns:1fr 1fr;min-height:380px;
+  border-radius:var(--radius);overflow:hidden;box-shadow:0 -12px 40px -20px rgba(11,11,34,.25)}
+.qcard:nth-child(2){top:calc(14vh + 34px)}
+.qcard:nth-child(3){top:calc(14vh + 68px)}
+.qcard-body{padding:clamp(28px,4vw,54px);display:flex;flex-direction:column;justify-content:center;gap:16px}
+.qcard-body .step{font-size:.72rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;opacity:.65}
+.qcard-body h3{font-size:clamp(1.6rem,2.6vw,2.4rem);line-height:1.1}
+.qcard-body p{font-size:.98rem;line-height:1.7;opacity:.85;max-width:46ch}
+.qcard-media{position:relative;min-height:280px}
+.qcard-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.qcard.q1{background:var(--ink);color:var(--cream)}
+.qcard.q1 .step{color:var(--bloom)}
+.qcard.q2{background:var(--berry);color:#fff}
+.qcard.q2 .step{color:var(--ink)}
+.qcard.q3{background:var(--cream-2);color:var(--ink);border:1px solid #DCD5C4}
+.qcard.q3 .step{color:var(--berry-deep)}
+@media (max-width:820px){
+  .qcard{grid-template-columns:1fr}
+  .qcard-media{order:-1;min-height:220px}
+}
+
+/* ---------- BIG BERRY transition ---------- */
+.berry-zoom{position:relative;height:220svh;background:var(--cream);z-index:2}
+.berry-zoom-pin{position:sticky;top:0;height:100svh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.berry-zoom .big-berry{width:min(34vw,340px);will-change:transform}
+.berry-zoom .zoom-word{position:absolute;font-family:'Fraunces',serif;font-weight:700;
+  font-size:clamp(2.6rem,7vw,7rem);color:var(--ink);white-space:nowrap;letter-spacing:-.02em}
+.zoom-word.w1{top:12%;left:7vw}
+.zoom-word.w2{bottom:12%;right:7vw;font-style:italic;font-weight:400;color:var(--berry-deep)}
+
+/* ---------- CTA / falling berries ---------- */
+.finale{position:relative;background:var(--ink);min-height:100svh;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;z-index:3}
+.finale canvas{position:absolute;inset:0;width:100%;height:100%}
+.finale-inner{position:relative;text-align:center;padding:16vh 6vw;pointer-events:none}
+.finale h2{font-size:clamp(2.6rem,7vw,6.4rem);line-height:.98;color:var(--cream)}
+.finale h2 em{font-style:italic;font-weight:400;color:var(--bloom)}
+.finale p{margin:26px auto 0;max-width:46ch;color:#B9BEE8;line-height:1.7}
+.finale .btn{pointer-events:auto;margin-top:36px}
+.finale-hint{margin-top:18px;font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(165,180,252,.5)}
+
+/* ---------- footer ---------- */
+footer{background:var(--ink-2);padding:64px 6vw 40px;position:relative;z-index:3}
+.foot-grid{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
+.foot-brand{display:flex;align-items:center;gap:12px;font-family:'Fraunces',serif;font-weight:700;font-size:1.4rem}
+.foot-brand svg{width:32px;height:32px}
+.foot-grid p{margin-top:16px;color:#8E93C4;font-size:.9rem;line-height:1.7;max-width:34ch}
+.foot-grid h4{font-size:.76rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--bloom);margin-bottom:18px}
+.foot-grid ul{list-style:none;display:grid;gap:10px}
+.foot-grid ul a{color:#B9BEE8;font-size:.92rem;transition:color .2s;cursor:pointer}
+.foot-grid ul a:hover{color:#fff}
+.foot-bottom{max-width:1280px;margin:48px auto 0;padding-top:24px;border-top:1px solid rgba(165,180,252,.14);
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:#6E739F;font-size:.8rem}
+@media (max-width:820px){.foot-grid{grid-template-columns:1fr}}
+
+/* ---------- reveal helper ---------- */
+[data-reveal]{opacity:0;transform:translateY(46px)}
+
+@media (prefers-reduced-motion:reduce){
+  [data-reveal]{opacity:1;transform:none}
+  .hero-title .char{transform:none}
+  .loader{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+
+<!-- SVG defs: the blueberry -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <radialGradient id="berryGrad" cx="35%" cy="30%" r="80%">
+      <stop offset="0%" stop-color="#8B8BF0"/>
+      <stop offset="45%" stop-color="#5B5BD6"/>
+      <stop offset="100%" stop-color="#2B2B7E"/>
+    </radialGradient>
+    <g id="berryShape">
+      <circle cx="50" cy="54" r="42" fill="url(#berryGrad)"/>
+      <ellipse cx="36" cy="38" rx="13" ry="9" fill="#C7CDF9" opacity=".55" transform="rotate(-24 36 38)"/>
+      <path d="M50 12 L54 6 L57 13 L64 11 L60 18 L66 22 L58 24 L59 31 L52 27 L46 32 L45 24 L38 23 L44 18 L40 11 L47 14 Z"
+            fill="#23235A" transform="translate(0,4) scale(.9)" transform-origin="50 18"/>
+    </g>
+  </defs>
+</svg>
+
+<!-- preloader -->
+<div class="loader" id="loader" aria-hidden="true">
+  <svg viewBox="0 0 100 100" id="loaderBerry"><use href="#berryShape"/></svg>
+  <div class="loader-word" id="loaderWord">
+    <span>B</span><span>L</span><span>U</span><span>E</span><span>B</span><span>E</span><span>R</span><span>R</span><span>I</span><span>E</span><span>S</span>
+  </div>
+</div>
+
+<!-- nav -->
+<nav class="nav" id="nav" aria-label="Main">
+  <a class="nav-brand" href="#top" data-scroll>
+    <svg viewBox="0 0 100 100" aria-hidden="true"><use href="#berryShape"/></svg>
+    BLUEBERRIES
+  </a>
+  <div class="nav-links">
+    <a data-scroll href="#land">The Land</a>
+    <a data-scroll href="#harvest">Harvest</a>
+    <a data-scroll href="#quality">Quality</a>
+  </div>
+  <button class="nav-cta" data-scroll data-target="#contact">Order Now</button>
+</nav>
+
+<!-- hero -->
+<header class="hero" id="top">
+  <div class="hero-glow"></div>
+  <p class="hero-tag">Pejë · Kosova · Est. Highlands</p>
+  <h1 class="hero-title" aria-label="Berry Good Blueberries">
+    <span class="line" data-split>BERRY</span>
+    <span class="line" data-split><em>good.</em></span>
+  </h1>
+  <p class="hero-sub">The finest blueberries in the country — grown on vast, watched and
+    inspected fields beneath the Accursed Mountains of Pejë. Nothing ordinary grows here.</p>
+  <div class="hero-actions">
+    <button class="btn btn-primary" data-scroll data-target="#land">
+      Explore the farm
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </button>
+    <button class="btn btn-ghost" data-scroll data-target="#contact">Get in touch</button>
+  </div>
+  <p class="hero-hint">Click anywhere — drop a berry</p>
+  <div class="hero-scroll"><div class="wheel"></div>Scroll</div>
+</header>
+
+<!-- marquee -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track" id="marqueeTrack">
+    <!-- items duplicated by JS -->
+  </div>
+</div>
+
+<!-- THE LAND -->
+<section class="land" id="land">
+  <div class="land-inner">
+    <div>
+      <p class="section-label" data-reveal><i></i>Chapter 01 — The Land</p>
+      <h2 data-reveal><span class="chapter-num">01</span>Every bush.<br><em>Watched &amp; inspected.</em></h2>
+      <p class="lede" data-reveal>Our fields stretch across the Pejë highlands — one of the largest
+        monitored blueberry estates in Kosovo. Every row is walked, every bush inspected,
+        every berry accounted for. Quality isn't a promise here. It's a routine.</p>
+      <div class="land-stats" data-reveal>
+        <div class="stat"><b><span data-count="140">0</span><sup>+ha</sup></b><span>Monitored fields</span></div>
+        <div class="stat"><b><span data-count="250">0</span><sup>k</sup></b><span>Bushes under watch</span></div>
+        <div class="stat"><b><span data-count="4800">0</span></b><span>Inspections / season</span></div>
+        <div class="stat"><b><span data-count="98">0</span><sup>%</sup></b><span>Grade-A yield</span></div>
+      </div>
+    </div>
+    <div class="land-media" data-reveal>
+      <div class="land-img land-img-clip" id="landImg">
+        <img src="https://images.unsplash.com/photo-1688411758105-161fe600d41f?w=1000&q=80&auto=format&fit=crop"
+             alt="Blueberry bushes heavy with fruit on the Pejë farm" loading="lazy">
+      </div>
+      <div class="land-badge">
+        <svg viewBox="0 0 100 100" aria-hidden="true"><use href="#berryShape"/></svg>
+        <div><small>Certified fresh</small><strong>Nr. 1 in Kosova</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HARVEST -->
+<section class="harvest" id="harvest">
+  <div class="harvest-pin" id="harvestPin">
+    <div class="harvest-head">
+      <div>
+        <p class="section-label" style="color:var(--bloom)" data-reveal><i style="background:var(--bloom)"></i>Chapter 02 — The Harvest</p>
+        <h2 data-reveal><span class="chapter-num">02</span>Picked by hand.<br><em>Never rushed.</em></h2>
+      </div>
+      <p data-reveal>From bush to basket in minutes, from basket to cold room within the hour.
+        Scroll through a season with us.</p>
+    </div>
+    <div class="harvest-track" id="harvestTrack">
+      <figure class="hcard">
+        <img src="https://images.unsplash.com/photo-1627056027816-5c88854acf46?w=900&q=80&auto=format&fit=crop" alt="Rows of blueberry bushes across the farm" loading="lazy">
+        <span class="hcard-num">01</span>
+        <figcaption class="hcard-cap"><h3>The rows wake up</h3><span>June · Pejë</span></figcaption>
+      </figure>
+      <figure class="hcard">
+        <img src="https://images.unsplash.com/photo-1673103519993-9c9661f89527?w=900&q=80&auto=format&fit=crop" alt="Blueberries ripening on the bush at golden hour" loading="lazy">
+        <span class="hcard-num">02</span>
+        <figcaption class="hcard-cap"><h3>Sun does its work</h3><span>Golden hour</span></figcaption>
+      </figure>
+      <figure class="hcard">
+        <img src="https://images.unsplash.com/photo-1624244245044-3276904951c4?w=900&q=80&auto=format&fit=crop" alt="A handful of freshly picked blueberries above the field rows" loading="lazy">
+        <span class="hcard-num">03</span>
+        <figcaption class="hcard-cap"><h3>Picked by hand</h3><span>Every single one</span></figcaption>
+      </figure>
+      <figure class="hcard">
+        <img src="https://images.unsplash.com/photo-1689809056564-edca1d3f3817?w=900&q=80&auto=format&fit=crop" alt="Baskets filled with harvested blueberries" loading="lazy">
+        <span class="hcard-num">04</span>
+        <figcaption class="hcard-cap"><h3>Into the baskets</h3><span>Within the hour</span></figcaption>
+      </figure>
+      <figure class="hcard">
+        <img src="https://images.unsplash.com/photo-1498557850523-fd3d118b962e?w=900&q=80&auto=format&fit=crop" alt="A bowl overflowing with fresh blueberries" loading="lazy">
+        <span class="hcard-num">05</span>
+        <figcaption class="hcard-cap"><h3>To your table</h3><span>Country-wide</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- QUALITY -->
+<section class="quality" id="quality">
+  <div class="quality-head">
+    <p class="section-label" data-reveal><i></i>Chapter 03 — The Quality</p>
+    <h2 data-reveal><span class="chapter-num">03</span>Why ours taste<br><em>like no other.</em></h2>
+  </div>
+  <div class="qcards">
+    <article class="qcard q1">
+      <div class="qcard-body">
+        <span class="step">Step 1 — Inspect</span>
+        <h3>Walked daily, checked twice</h3>
+        <p>Agronomists walk every row of the estate. Soil, water and leaf are tested on a fixed
+          schedule — thousands of inspections a season, logged bush by bush.</p>
+      </div>
+      <div class="qcard-media"><img src="https://images.unsplash.com/photo-1625691407041-bfeed8919bdd?w=900&q=80&auto=format&fit=crop" alt="A hand holding blueberries between the field rows" loading="lazy"></div>
+    </article>
+    <article class="qcard q2">
+      <div class="qcard-body">
+        <span class="step">Step 2 — Select</span>
+        <h3>Only the deepest blue</h3>
+        <p>Berries are graded by size, firmness and bloom — that silver dust on the skin that
+          says a berry was never touched twice. Anything less than perfect stays behind.</p>
+      </div>
+      <div class="qcard-media"><img src="https://images.unsplash.com/photo-1457296898342-cdd24585d095?w=900&q=80&auto=format&fit=crop" alt="Vivid blue graded blueberries up close" loading="lazy"></div>
+    </article>
+    <article class="qcard q3">
+      <div class="qcard-body">
+        <span class="step">Step 3 — Deliver</span>
+        <h3>Cold chain, same day</h3>
+        <p>Picked in the morning, chilled by noon, moving by evening. From the highlands of Pejë
+          to markets across the country while the bloom is still on the berry.</p>
+      </div>
+      <div class="qcard-media"><img src="https://images.unsplash.com/photo-1425934398893-310a009a77f9?w=900&q=80&auto=format&fit=crop" alt="Deep blue blueberries stacked after harvest" loading="lazy"></div>
+    </article>
+  </div>
+</section>
+
+<!-- BIG BERRY zoom transition -->
+<section class="berry-zoom" aria-hidden="true">
+  <div class="berry-zoom-pin" id="berryZoomPin">
+    <span class="zoom-word w1" id="zoomW1">one berry</span>
+    <svg class="big-berry" id="bigBerry" viewBox="0 0 100 100"><use href="#berryShape"/></svg>
+    <span class="zoom-word w2" id="zoomW2">says it all</span>
+  </div>
+</section>
+
+<!-- FINALE / contact -->
+<section class="finale" id="contact">
+  <canvas id="berryCanvas" aria-hidden="true"></canvas>
+  <div class="finale-inner">
+    <h2 data-reveal>Taste the <em>highlands.</em></h2>
+    <p data-reveal>Wholesale, retail or a single crate for the weekend — tell us what you need
+      and we'll have it picked, packed and on its way.</p>
+    <a class="btn btn-primary" href="mailto:hello@blueberries-peja.com" data-reveal>
+      hello@blueberries-peja.com
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <p class="finale-hint" data-reveal>Psst — click around. Berries will fall.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-grid">
+    <div>
+      <div class="foot-brand">
+        <svg viewBox="0 0 100 100" aria-hidden="true"><use href="#berryShape"/></svg>
+        BLUEBERRIES
+      </div>
+      <p>Boronica të Pejës. Grown, watched and hand-picked in the highlands of Pejë, Kosova —
+        the finest blueberries in the country.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <ul>
+        <li><a data-scroll href="#land">The Land</a></li>
+        <li><a data-scroll href="#harvest">The Harvest</a></li>
+        <li><a data-scroll href="#quality">The Quality</a></li>
+        <li><a data-scroll href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Visit</h4>
+      <ul>
+        <li><a>Pejë, Kosova</a></li>
+        <li><a href="mailto:hello@blueberries-peja.com">hello@blueberries-peja.com</a></li>
+        <li><a>+383 4X XXX XXX</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 Blueberries — Pejë, Kosova</span>
+    <span>Grown under the Accursed Mountains</span>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- Lenis smooth scroll ---------- */
+let lenis = null;
+if (!reduceMotion) {
+  lenis = new Lenis({ lerp: 0.1, wheelMultiplier: 1 });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add(t => lenis.raf(t * 1000));
+  gsap.ticker.lagSmoothing(0);
+}
+
+/* ---------- anchor scrolling ---------- */
+document.querySelectorAll('[data-scroll]').forEach(el => {
+  el.addEventListener('click', e => {
+    const target = el.dataset.target || el.getAttribute('href');
+    if (!target || !target.startsWith('#')) return;
+    e.preventDefault();
+    const node = document.querySelector(target);
+    if (!node) return;
+    lenis ? lenis.scrollTo(node, { offset: 0, duration: 1.6 }) : node.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+/* ---------- split hero title into chars ---------- */
+document.querySelectorAll('[data-split]').forEach(line => {
+  const walk = node => {
+    [...node.childNodes].forEach(child => {
+      if (child.nodeType === 3) {
+        const frag = document.createDocumentFragment();
+        [...child.textContent].forEach(ch => {
+          const s = document.createElement('span');
+          s.className = 'char';
+          s.textContent = ch === ' ' ? ' ' : ch;
+          frag.appendChild(s);
+        });
+        node.replaceChild(frag, child);
+      } else walk(child);
+    });
+  };
+  walk(line);
+});
+
+/* ---------- marquee content ---------- */
+const marqueeItems = ['100% Natural', 'Grown in Pejë', 'Watched & Inspected', 'Nr. 1 in Kosova', 'Hand-picked', 'Boronica të Pejës'];
+const berrySvg = '<svg viewBox="0 0 100 100" aria-hidden="true"><use href="#berryShape"/></svg>';
+const track = document.getElementById('marqueeTrack');
+track.innerHTML = Array(2).fill(
+  marqueeItems.map(t => `<span class="marquee-item">${t} ${berrySvg}</span>`).join('')
+).join('');
+
+/* ---------- intro timeline ---------- */
+const intro = gsap.timeline({ defaults: { ease: 'power3.out' } });
+if (!reduceMotion) {
+  intro
+    .from('#loaderBerry', { y: -160, scaleY: 1.15, duration: .55, ease: 'bounce.out' })
+    .to('#loaderBerry', { rotate: 12, yoyo: true, repeat: 1, duration: .18 }, '-=.1')
+    .to('#loaderWord span', { y: 0, stagger: .045, duration: .6 }, '-=.2')
+    .to('#loader', { yPercent: -100, duration: .9, ease: 'power4.inOut', delay: .45 })
+    .set('#loader', { display: 'none' })
+    .to('.hero-title .char', { y: 0, stagger: .035, duration: .9, ease: 'power4.out' }, '-=.55')
+    .to('.hero-tag', { opacity: 1, duration: .7 }, '-=.6')
+    .to('.hero-sub', { opacity: 1, y: 0, duration: .7 }, '-=.5')
+    .to('.hero-actions', { opacity: 1, duration: .7 }, '-=.45')
+    .to(['.hero-scroll', '.hero-hint'], { opacity: 1, duration: .8 }, '-=.3')
+    .to('#nav', { opacity: 1, translate: '0 0', duration: .7 }, '-=.6');
+} else {
+  gsap.set(['#nav', '.hero-tag', '.hero-sub', '.hero-actions', '.hero-scroll'], { opacity: 1, translate: '0 0' });
+}
+
+/* ---------- floating hero berries ---------- */
+const hero = document.querySelector('.hero');
+const floaters = [];
+const floatSpecs = [
+  { x: 8,  y: 18, s: 70,  d: 5.2 }, { x: 88, y: 14, s: 46, d: 4.2 },
+  { x: 78, y: 66, s: 90,  d: 6.0 }, { x: 14, y: 72, s: 52, d: 4.6 },
+  { x: 46, y: 10, s: 34,  d: 3.8 }, { x: 62, y: 84, s: 40, d: 5.6 },
+  { x: 30, y: 46, s: 26,  d: 4.4 }
+];
+floatSpecs.forEach((f, i) => {
+  const el = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  el.setAttribute('viewBox', '0 0 100 100');
+  el.classList.add('hero-berry');
+  el.innerHTML = '<use href="#berryShape"/>';
+  el.style.cssText = `left:${f.x}%;top:${f.y}%;width:${f.s}px;height:${f.s}px;opacity:${.5 + f.s / 180}`;
+  hero.appendChild(el);
+  floaters.push({ el, depth: f.s / 90 });
+  if (!reduceMotion) {
+    gsap.to(el, { y: '+=' + (14 + i * 4), rotation: i % 2 ? 10 : -10, duration: f.d, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+    gsap.from(el, { scale: 0, opacity: 0, duration: 1, delay: 2 + i * .12, ease: 'back.out(2)' });
+  }
+});
+/* mouse parallax */
+if (!reduceMotion && matchMedia('(hover:hover)').matches) {
+  const setters = floaters.map(f => ({
+    x: gsap.quickTo(f.el, 'x', { duration: .8, ease: 'power3' }),
+    y: gsap.quickTo(f.el, 'y', { duration: .8, ease: 'power3' }),
+    depth: f.depth
+  }));
+  hero.addEventListener('mousemove', e => {
+    const cx = (e.clientX / innerWidth - .5), cy = (e.clientY / innerHeight - .5);
+    setters.forEach(s => { s.x(cx * 60 * s.depth); s.y(cy * 40 * s.depth); });
+  });
+}
+/* click hero -> drop a berry */
+hero.addEventListener('click', e => {
+  if (reduceMotion || e.target.closest('button,a')) return;
+  const el = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  el.setAttribute('viewBox', '0 0 100 100');
+  el.classList.add('hero-berry');
+  el.innerHTML = '<use href="#berryShape"/>';
+  const s = 28 + Math.random() * 40;
+  el.style.cssText = `left:${e.clientX - s / 2}px;top:${e.clientY - s / 2}px;width:${s}px;height:${s}px;position:fixed`;
+  hero.appendChild(el);
+  gsap.fromTo(el, { scale: 0 }, { scale: 1, duration: .3, ease: 'back.out(3)' });
+  gsap.to(el, {
+    y: innerHeight - e.clientY + s, rotation: gsap.utils.random(-180, 180),
+    duration: 1.1, ease: 'bounce.out', delay: .15,
+    onComplete: () => gsap.to(el, { opacity: 0, scale: .6, duration: .5, delay: .4, onComplete: () => el.remove() })
+  });
+});
+
+/* ---------- progress bar ---------- */
+gsap.to('#progressBar', {
+  scaleX: 1, ease: 'none',
+  scrollTrigger: { trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: .3 }
+});
+
+/* ---------- generic reveals ---------- */
+gsap.utils.toArray('[data-reveal]').forEach(el => {
+  gsap.to(el, {
+    opacity: 1, y: 0, duration: 1, ease: 'power3.out',
+    scrollTrigger: { trigger: el, start: 'top 86%' }
+  });
+});
+
+/* ---------- land image clip + parallax ---------- */
+const landImg = document.getElementById('landImg');
+gsap.to(landImg, {
+  clipPath: 'inset(0% 0% 0% 0% round 28px)', ease: 'none',
+  scrollTrigger: { trigger: landImg, start: 'top 90%', end: 'top 35%', scrub: true }
+});
+gsap.to(landImg.querySelector('img'), {
+  scale: 1, ease: 'none',
+  scrollTrigger: { trigger: landImg, start: 'top bottom', end: 'bottom top', scrub: true }
+});
+
+/* ---------- counters ---------- */
+gsap.utils.toArray('[data-count]').forEach(el => {
+  const target = +el.dataset.count;
+  gsap.fromTo(el, { innerText: 0 }, {
+    innerText: target, duration: 2, ease: 'power2.out',
+    snap: { innerText: 1 },
+    onUpdate() { el.innerText = Math.round(+el.innerText).toLocaleString('en-US'); },
+    scrollTrigger: { trigger: el, start: 'top 88%' }
+  });
+});
+
+/* ---------- horizontal harvest gallery (desktop) ---------- */
+ScrollTrigger.matchMedia({
+  '(min-width: 901px)': () => {
+    const track = document.getElementById('harvestTrack');
+    const getDist = () => track.scrollWidth - innerWidth;
+    gsap.to(track, {
+      x: () => -getDist(), ease: 'none',
+      scrollTrigger: {
+        trigger: '#harvestPin', start: 'top top',
+        end: () => '+=' + getDist(),
+        pin: true, scrub: 1, invalidateOnRefresh: true, anticipatePin: 1
+      }
+    });
+  }
+});
+
+/* ---------- big berry zoom ---------- */
+if (!reduceMotion) {
+  const zoomTl = gsap.timeline({
+    scrollTrigger: { trigger: '.berry-zoom', start: 'top top', end: 'bottom bottom', scrub: 1 }
+  });
+  zoomTl
+    .fromTo('#bigBerry', { scale: .25, rotation: -18 }, { scale: 1, rotation: 0, ease: 'none', duration: .4 })
+    .fromTo('#zoomW1', { xPercent: -60, opacity: 0 }, { xPercent: 0, opacity: 1, duration: .25 }, .1)
+    .fromTo('#zoomW2', { xPercent: 60, opacity: 0 }, { xPercent: 0, opacity: 1, duration: .25 }, .18)
+    .to('#bigBerry', { scale: 14, duration: .45, ease: 'power2.in' }, .55)
+    .to(['#zoomW1', '#zoomW2'], { opacity: 0, duration: .15 }, .55)
+    .to('.berry-zoom-pin', { backgroundColor: '#0B0B22', duration: .3 }, .7);
+}
+
+/* ---------- falling berries canvas (finale) ---------- */
+(() => {
+  const canvas = document.getElementById('berryCanvas');
+  const ctx = canvas.getContext('2d');
+  const finale = document.getElementById('contact');
+  let W, H, running = false, berries = [];
+  const resize = () => { W = canvas.width = finale.offsetWidth; H = canvas.height = finale.offsetHeight; };
+  resize(); addEventListener('resize', resize);
+
+  const makeBerry = (x, y) => ({
+    x: x ?? Math.random() * W, y: y ?? -30,
+    r: 8 + Math.random() * 16,
+    vy: 1 + Math.random() * 2, vx: (Math.random() - .5) * 1.2,
+    rot: Math.random() * Math.PI * 2, vr: (Math.random() - .5) * .06,
+    bounced: 0
+  });
+
+  const drawBerry = b => {
+    ctx.save(); ctx.translate(b.x, b.y); ctx.rotate(b.rot);
+    const g = ctx.createRadialGradient(-b.r * .3, -b.r * .35, b.r * .15, 0, 0, b.r);
+    g.addColorStop(0, '#8B8BF0'); g.addColorStop(.5, '#5B5BD6'); g.addColorStop(1, '#2B2B7E');
+    ctx.fillStyle = g;
+    ctx.beginPath(); ctx.arc(0, 0, b.r, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = 'rgba(199,205,249,.5)';
+    ctx.beginPath(); ctx.ellipse(-b.r * .32, -b.r * .35, b.r * .3, b.r * .18, -.5, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#23235A';
+    ctx.beginPath();
+    for (let i = 0; i < 5; i++) {
+      const a = i * Math.PI * 2 / 5 - Math.PI / 2;
+      ctx.lineTo(Math.cos(a) * b.r * .22, -b.r * .78 + Math.sin(a) * b.r * .22);
+    }
+    ctx.closePath(); ctx.fill();
+    ctx.restore();
+  };
+
+  let last = 0;
+  const loop = t => {
+    if (!running) return;
+    if (t - last > 900 && berries.length < 40 && !reduceMotion) { berries.push(makeBerry()); last = t; }
+    ctx.clearRect(0, 0, W, H);
+    berries.forEach(b => {
+      b.vy += .05; b.x += b.vx; b.y += b.vy; b.rot += b.vr;
+      if (b.y > H - b.r && b.vy > 0) {
+        b.y = H - b.r; b.vy *= -.45; b.vx *= .9; b.bounced++;
+      }
+      drawBerry(b);
+    });
+    berries = berries.filter(b => !(b.bounced > 3 && Math.abs(b.vy) < .3) || b.y < H - b.r - 1);
+    if (berries.length > 60) berries.splice(0, berries.length - 60);
+    requestAnimationFrame(loop);
+  };
+
+  ScrollTrigger.create({
+    trigger: finale, start: 'top bottom', end: 'bottom top',
+    onEnter: () => { if (!running) { running = true; requestAnimationFrame(loop); } },
+    onEnterBack: () => { if (!running) { running = true; requestAnimationFrame(loop); } },
+    onLeave: () => running = false,
+    onLeaveBack: () => running = false
+  });
+
+  finale.addEventListener('click', e => {
+    if (e.target.closest('a,button')) return;
+    const rect = finale.getBoundingClientRect();
+    for (let i = 0; i < 6; i++) berries.push(makeBerry(e.clientX - rect.left + (Math.random() - .5) * 60, e.clientY - rect.top));
+  });
+})();
+
+/* ---------- custom cursor ---------- */
+if (matchMedia('(hover:hover)').matches) {
+  const cursor = document.querySelector('.cursor');
+  const cx = gsap.quickTo(cursor, 'x', { duration: .18, ease: 'power3' });
+  const cy = gsap.quickTo(cursor, 'y', { duration: .18, ease: 'power3' });
+  addEventListener('mousemove', e => { cx(e.clientX); cy(e.clientY); });
+  document.querySelectorAll('a,button,.hcard').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('is-hover'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('is-hover'));
+  });
+}
+</script>
+</body>
+</html>
