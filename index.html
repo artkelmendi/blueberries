@@ -102,7 +102,9 @@ body:hover .cursor{opacity:1}
 .hero-scroll .wheel::after{content:"";position:absolute;top:6px;left:50%;width:4px;height:8px;margin-left:-2px;
   border-radius:4px;background:var(--bloom);animation:wheel 1.8s ease-in-out infinite}
 @keyframes wheel{0%,100%{transform:translateY(0);opacity:1}70%{transform:translateY(12px);opacity:0}71%{opacity:0}}
-.hero-berry{position:absolute;pointer-events:none;will-change:transform;filter:drop-shadow(0 18px 30px rgba(0,0,0,.45))}
+.hero-berry{position:absolute;pointer-events:none;will-change:transform;filter:drop-shadow(0 18px 30px rgba(0,0,0,.45));z-index:0}
+.hero-tag,.hero-logo,.hero-sub,.hero-actions{position:relative;z-index:2}
+.hero-scroll,.hero-hint{z-index:2}
 .hero-glow{position:absolute;width:60vw;height:60vw;border-radius:50%;left:50%;top:60%;
   transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(101,75,135,.28),transparent 65%);pointer-events:none}
 .hero-hint{position:absolute;bottom:34px;right:32px;font-size:.7rem;letter-spacing:.18em;color:rgba(185,166,220,.55);
@@ -213,7 +215,7 @@ body:hover .cursor{opacity:1}
 /* ---------- BIG BERRY transition ---------- */
 .berry-zoom{position:relative;height:220svh;background:var(--cream);z-index:2}
 .berry-zoom-pin{position:sticky;top:0;height:100svh;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.berry-zoom .big-berry{width:min(34vw,340px);will-change:transform}
+.berry-zoom .big-berry{width:min(170vh,170vw);will-change:transform}
 .berry-zoom .zoom-word{position:absolute;font-family:'Fraunces',serif;font-weight:700;
   font-size:clamp(2.6rem,7vw,7rem);color:var(--ink);white-space:nowrap;letter-spacing:-.02em}
 .zoom-word.w1{top:12%;left:7vw}
@@ -372,13 +374,13 @@ footer{background:var(--ink-2);padding:64px 6vw 40px;position:relative;z-index:3
     <div>
       <p class="section-label" data-reveal><i></i>Chapter 01 — The Land</p>
       <h2 data-reveal><span class="chapter-num">01</span>Every bush.<br><em>Watched &amp; inspected.</em></h2>
-      <p class="lede" data-reveal>Our fields stretch across the Pejë highlands — one of the largest
-        monitored blueberry estates in Kosovo, built to supply serious volume. Every row is walked,
-        every bush inspected, every berry accounted for. Quality isn't a promise here. It's a routine.</p>
+      <p class="lede" data-reveal>Our fields sit in the Pejë highlands — a meticulously monitored
+        blueberry estate built to supply serious volume. Every row is walked, every bush inspected,
+        every berry accounted for. Quality isn't a promise here. It's a routine.</p>
       <div class="land-stats" data-reveal>
-        <div class="stat"><b><span data-count="140">0</span><sup>+ha</sup></b><span>Monitored fields</span></div>
-        <div class="stat"><b><span data-count="250">0</span><sup>k</sup></b><span>Bushes under watch</span></div>
-        <div class="stat"><b><span data-count="4800">0</span></b><span>Inspections / season</span></div>
+        <div class="stat"><b><span data-count="3">0</span><sup>+ha</sup></b><span>Monitored fields</span></div>
+        <div class="stat"><b><span data-count="10">0</span><sup>k</sup></b><span>Bushes under watch</span></div>
+        <div class="stat"><b><span data-count="1200">0</span></b><span>Inspections / season</span></div>
         <div class="stat"><b><span data-count="98">0</span><sup>%</sup></b><span>Grade-A yield</span></div>
       </div>
     </div>
@@ -612,7 +614,8 @@ track.innerHTML = Array(2).fill(
 const intro = gsap.timeline({ defaults: { ease: 'power3.out' } });
 if (!reduceMotion) {
   intro
-    .from('.loader-mono .mp', { scale: 0, opacity: 0, transformOrigin: '50% 50%', stagger: .14, duration: .7, ease: 'back.out(2.2)' })
+    .from('.loader-mono', { scale: .55, opacity: 0, duration: .8, ease: 'back.out(1.6)' })
+    .from('.loader-mono .mp:nth-of-type(n+3)', { scale: 0, opacity: 0, transformOrigin: '50% 50%', stagger: .12, duration: .5, ease: 'back.out(3)' }, '-=.3')
     .to('#loaderWordmark', { opacity: 1, y: 0, duration: .7 }, '-=.25')
     .to('#loader', { yPercent: -100, duration: .9, ease: 'power4.inOut', delay: .6 })
     .set('#loader', { display: 'none' })
@@ -736,10 +739,10 @@ if (!reduceMotion) {
     scrollTrigger: { trigger: '.berry-zoom', start: 'top top', end: 'bottom bottom', scrub: 1 }
   });
   zoomTl
-    .fromTo('#bigBerry', { scale: .25, rotation: -18 }, { scale: 1, rotation: 0, ease: 'none', duration: .4 })
+    .fromTo('#bigBerry', { scale: .062, rotation: -18 }, { scale: .25, rotation: 0, ease: 'none', duration: .4 })
     .fromTo('#zoomW1', { xPercent: -60, opacity: 0 }, { xPercent: 0, opacity: 1, duration: .25 }, .1)
     .fromTo('#zoomW2', { xPercent: 60, opacity: 0 }, { xPercent: 0, opacity: 1, duration: .25 }, .18)
-    .to('#bigBerry', { scale: 14, duration: .45, ease: 'power2.in' }, .55)
+    .to('#bigBerry', { scale: 1.4, duration: .45, ease: 'power2.in' }, .55)
     .to(['#zoomW1', '#zoomW2'], { opacity: 0, duration: .15 }, .55)
     .to('.berry-zoom-pin', { backgroundColor: '#131020', duration: .3 }, .7);
 }
